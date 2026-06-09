@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import { Formik, useFormik } from 'formik'
 import * as Yup from 'yup';
@@ -5,10 +6,9 @@ import { FaEdit, FaWindowClose } from "react-icons/fa";
 import { MdDelete } from 'react-icons/md';
 import { TbSubtask } from 'react-icons/tb';
 
-
-const Task6 = () => {
-
+const Task6copy = () => {
     const [data, setdata] = useState([])
+    const [subdata, setsubdata] = useState([])
     const [editindex, seteditindex] = useState(null)
     const [display, setdisplay] = useState(false)
 
@@ -19,12 +19,12 @@ const Task6 = () => {
 
 
 
-    useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("savedata"));
-        if (stored) {
-            setdata(stored);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const stored = JSON.parse(localStorage.getItem("savedata"));
+    //     if (stored) {
+    //         setdata(stored);
+    //     }
+    // }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -46,12 +46,19 @@ const Task6 = () => {
             }
             else {
                 setdata([...data, values])
-                localStorage.setItem("savedata", JSON.stringify(data))
+                // localStorage.setItem("savedata", JSON.stringify(data))
             }
+
+            // if(display === true ){
+            //     setsubdata([...subdata,values])
+            //     console.log(subdata)
+
+            // }
 
             resetForm();
         },
     })
+
 
     const Edit = (item, i) => {
         seteditindex(i)
@@ -60,18 +67,26 @@ const Task6 = () => {
     const Delete = (i) => {
         setdata(data.filter((_, index) => (
             index !== i
+
         )))
-        console.log(i)
+
 
     }
 
-    function addtask() {
+    function addtask(item, i) {
         setdisplay(true)
+        if (display === true) {
+            setsubdata([...subdata, item])
+            console.log(item)
+        }
     }
 
-
+    // function handelsubdata(){
+    //     setdata([...data,setsubdata])
+    //     console.log(data)
+    // }
     const { handleSubmit, handleBlur, handleChange, values, setValues } = formik
-    const { fname } = values
+    const { fname, sname } = values
     return (
         <div>
             <div className='d-flex justify-content-center '>
@@ -92,7 +107,7 @@ const Task6 = () => {
                                 onChange={handleChange}
                             />
                             {formik.touched.fname && formik.errors.fname ? (
-                                <div style={{color:"white",textAlign:"center"}}>{formik.errors.fname}</div>
+                                <div style={{ color: "white", textAlign: "center" }}>{formik.errors.fname}</div>
                             ) : null}
 
                         </div>
@@ -122,8 +137,8 @@ const Task6 = () => {
             <div className="mt-5 ">
                 <div className="table-responsive shadow-lg rounded-4 overflow-hidden scrolled">
                     <table className="table mb-0">
-                        <thead style={{ background: "#111827", color: "white" }}>
-                            <tr >
+                        <thead style={{ background: "#ffffffff", color: "white" }}>
+                            <tr className='d-flex justify-content-between' >
                                 <th>ID</th>
                                 <th>Task</th>
                                 <th>Action</th>
@@ -161,7 +176,7 @@ const Task6 = () => {
                                             </button>
                                             <button
                                                 className="btn btn-sm btn-success ms-2"
-                                                onClick={addtask}
+                                                onClick={() => addtask(item, i)}
                                             >
                                                 <TbSubtask style={{ fontSize: "30px" }} />
                                             </button>
@@ -180,7 +195,7 @@ const Task6 = () => {
                                         {/* for SubTask Ui  */}
                                         <div className='outer_box1 d-flex p-1 '>
                                             <h1 style={{ color: "Black", fontSize: "40px" }} className='px-5 py-3'>Enter Today Task Here....</h1>
-                                            <form onSubmit={handleSubmit} >
+                                            <form  >
                                                 <label htmlFor="sname"></label>
                                                 <input
                                                     id='sname'
@@ -188,9 +203,11 @@ const Task6 = () => {
                                                     type="text"
                                                     className='inputset2'
                                                     onBlur={handleBlur}
-                                                    // value={sname}
+                                                    value={sname}
                                                     onChange={handleChange}
                                                 />
+
+
                                                 <div></div>
 
                                                 <button
@@ -227,6 +244,11 @@ const Task6 = () => {
 
                                             </form>
 
+                                            {/* <form>
+                                                <input type="text" value={subdata} placeholder='Enter Your Name' onChange={(e)=> setsubdata(e.target.value)}/>
+                                                <button onClick={handelsubdata()}>Submit</button>
+                                            </form> */}
+
                                         </div>
                                     </div>
                                 )}
@@ -240,8 +262,7 @@ const Task6 = () => {
             </div>
 
         </div>
-
     )
 }
 
-export default Task6
+export default Task6copy
