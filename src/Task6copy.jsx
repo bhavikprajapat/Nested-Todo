@@ -12,9 +12,12 @@ const Task6copy = () => {
     const [editindex, seteditindex] = useState(null)
     const [display, setdisplay] = useState(false)
     const [selectID, setSelectID] = useState(null);
+<<<<<<< HEAD
     const [editindexsub, seteditindexsub] = useState(null)
 
 
+=======
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
     // useEffect(() => {
     //     localStorage.setItem("savedata", JSON.stringify(data))
     // }, [data])
@@ -53,7 +56,11 @@ const Task6copy = () => {
         },
     })
 
+<<<<<<< HEAD
     const formiksubvalue = useFormik({
+=======
+    const formiksub = useFormik({
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
         initialValues: {
             sname: "",
         },
@@ -62,10 +69,17 @@ const Task6copy = () => {
                 .matches(/^[A-Za-z\s]+$/, 'Only Latter use')
                 .required('Required')
         }),
+<<<<<<< HEAD
         onSubmit: (values, { resetForm }) => {
             let newData = data.map((item, ind) => {
                 let subData = item.subdata ? item.subdata : []
 
+=======
+        onSubmit: (values,{ resetForm }) => {
+            let newData = data.map((item, ind) => {
+                let subData = item.subdata ? item.subdata : []
+                console.log({ ...item, subdata: [...subData, values.sname] });
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
                 if (ind === selectID) {
                     return { ...item, subdata: [...subData, values.sname] }
                 }
@@ -73,11 +87,18 @@ const Task6copy = () => {
                     return item
                 };
             })
+<<<<<<< HEAD
             setdata(newData)
             console.log(data)
             resetForm()
         },
 
+=======
+            setdata(newData);
+            resetForm()
+            // console.log(newData);
+        },
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
     })
 
 
@@ -100,16 +121,27 @@ const Task6copy = () => {
 
     }
 
+<<<<<<< HEAD
     // function addtask(item) {
     //     console.log(item)
     // }
+=======
+    function addtask() {
+        console.log(sname);
+    }
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
 
     // function handelsubdata(){
     //     setdata([...data,setsubdata])
     //     console.log(data)
     // }
     const { handleSubmit, handleBlur, handleChange, values, setValues } = formik
+<<<<<<< HEAD
     const { fname } = values
+=======
+
+    const { fname, sname } = values
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
     return (
         <div>
             <div className='d-flex justify-content-center '>
@@ -179,11 +211,26 @@ const Task6copy = () => {
                                 </tr>
                             ) : (
 
+<<<<<<< HEAD
                                 data?.map((item, i) => (
                                     <tr key={i} style={{ verticalAlign: "middle" }} >
                                         <tr>
                                             <td>{i + 1}</td>
                                             <td>{item.fname}
+=======
+                                data.map((item, i) => (
+                                    <tr key={i} style={{ verticalAlign: "middle" }}>
+                                        <td>{i + 1}</td>
+                                        <td>{item.fname}
+                                            {item.subdata &&(
+                                            item.subdata.map((it,id)=>{
+                                                return (
+                                                    <li>{it}</li>
+                                                )
+                                            })
+                                        )}
+                                        </td>
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
 
                                             </td>
                                             <td>
@@ -193,6 +240,7 @@ const Task6copy = () => {
                                                 >
                                                     <FaEdit style={{ fontSize: "30px" }} />
 
+<<<<<<< HEAD
                                                 </button>
                                                 <button
                                                     className="btn btn-sm btn-danger ms-2"
@@ -247,6 +295,23 @@ const Task6copy = () => {
                                                 ))
                                             }
                                         </tr>
+=======
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-danger ms-2"
+                                                onClick={() => Delete(i)}
+                                            >
+                                                <MdDelete style={{ fontSize: "30px" }} />
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-success ms-2"
+                                                onClick={() => { setdisplay(true); setSelectID(i) }}
+                                            >
+                                                <TbSubtask style={{ fontSize: "30px" }} />
+                                            </button>
+                                        </td>
+                                        
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
 
                                     </tr>
 
@@ -268,7 +333,11 @@ const Task6copy = () => {
                                         {/* for SubTask Ui  */}
                                         <div className='outer_box1 d-flex p-1 '>
                                             <h1 style={{ color: "Black", fontSize: "40px" }} className='px-5 py-3'>Enter Today Task Here....</h1>
+<<<<<<< HEAD
                                             <form onSubmit={formiksubvalue.handleSubmit}>
+=======
+                                            <form onSubmit={formiksub.handleSubmit} >
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
                                                 <label htmlFor="sname"></label>
                                                 <input
                                                     id='sname'
@@ -276,9 +345,15 @@ const Task6copy = () => {
                                                     type="text"
 
                                                     className='inputset2'
+<<<<<<< HEAD
                                                     onBlur={formiksubvalue.handleBlur}
                                                     value={formiksubvalue.values.sname}
                                                     onChange={formiksubvalue.handleChange}
+=======
+                                                    onBlur={formiksub.handleBlur}
+                                                    value={formiksub.values.sname}
+                                                    onChange={formiksub.handleChange}
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
                                                 />
 
 
@@ -312,7 +387,10 @@ const Task6copy = () => {
                                                             margin: "auto",
                                                             marginTop: "5px"
                                                         }}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 32602a904d1a6e10f93a5f802ef1a70465eb34af
                                                     >
                                                         <FaWindowClose />
                                                     </button>
