@@ -8,9 +8,11 @@ import { TbSubtask } from 'react-icons/tb';
 
 const Task6copy = () => {
     const [data, setdata] = useState([])
-    const [subdata, setsubdata] = useState([])
+    // const [subdata, setsubdata] = useState([])
     const [editindex, seteditindex] = useState(null)
     const [display, setdisplay] = useState(false)
+    const [selectID, setSelectID] = useState(null);
+    const [editindexsub, seteditindexsub] = useState(null)
 
 
     // useEffect(() => {
@@ -29,7 +31,6 @@ const Task6copy = () => {
     const formik = useFormik({
         initialValues: {
             fname: "",
-            sname: "",
         },
         validationSchema: Yup.object().shape({
             fname: Yup.string()
@@ -48,21 +49,47 @@ const Task6copy = () => {
                 setdata([...data, values])
                 // localStorage.setItem("savedata", JSON.stringify(data))
             }
-
-            // if(display === true ){
-            //     setsubdata([...subdata,values])
-            //     console.log(subdata)
-
-            // }
-
             resetForm();
         },
+    })
+
+    const formiksubvalue = useFormik({
+        initialValues: {
+            sname: "",
+        },
+        validationSchema: Yup.object().shape({
+            sname: Yup.string()
+                .matches(/^[A-Za-z\s]+$/, 'Only Latter use')
+                .required('Required')
+        }),
+        onSubmit: (values, { resetForm }) => {
+            let newData = data.map((item, ind) => {
+                let subData = item.subdata ? item.subdata : []
+
+                if (ind === selectID) {
+                    return { ...item, subdata: [...subData, values.sname] }
+                }
+                else {
+                    return item
+                };
+            })
+            setdata(newData)
+            console.log(data)
+            resetForm()
+        },
+
     })
 
 
     const Edit = (item, i) => {
         seteditindex(i)
         setValues(item)
+    }
+
+    const Editsub = (it, i) => {
+        console.log(it)
+        seteditindexsub(i)
+        setValues(it)
     }
     const Delete = (i) => {
         setdata(data.filter((_, index) => (
@@ -73,20 +100,16 @@ const Task6copy = () => {
 
     }
 
-    function addtask(item, i) {
-        setdisplay(true)
-        if (display === true) {
-            setsubdata([...subdata, item])
-            console.log(item)
-        }
-    }
+    // function addtask(item) {
+    //     console.log(item)
+    // }
 
     // function handelsubdata(){
     //     setdata([...data,setsubdata])
     //     console.log(data)
     // }
     const { handleSubmit, handleBlur, handleChange, values, setValues } = formik
-    const { fname, sname } = values
+    const { fname } = values
     return (
         <div>
             <div className='d-flex justify-content-center '>
@@ -143,6 +166,7 @@ const Task6copy = () => {
                                 <th>Task</th>
                                 <th>Action</th>
                             </tr>
+
                         </thead>
 
                         <tbody style={{ background: "#fff" }}>
@@ -155,35 +179,84 @@ const Task6copy = () => {
                                 </tr>
                             ) : (
 
-                                data.map((item, i) => (
-                                    <tr key={i} style={{ verticalAlign: "middle" }}>
-                                        <td>{i + 1}</td>
-                                        <td>{item.fname}</td>
+                                data?.map((item, i) => (
+                                    <tr key={i} style={{ verticalAlign: "middle" }} >
+                                        <tr>
+                                            <td>{i + 1}</td>
+                                            <td>{item.fname}
 
-                                        <td>
-                                            <button
-                                                className="btn btn-sm btn-warning"
-                                                onClick={() => Edit(item, i)}
-                                            >
-                                                <FaEdit style={{ fontSize: "30px" }} />
+                                            </td>
+                                            <td>
+                                                <button
+                                                    className="btn btn-sm btn-warning"
+                                                    onClick={() => Edit(item, i)}
+                                                >
+                                                    <FaEdit style={{ fontSize: "30px" }} />
 
-                                            </button>
-                                            <button
-                                                className="btn btn-sm btn-danger ms-2"
-                                                onClick={() => Delete(i)}
-                                            >
-                                                <MdDelete style={{ fontSize: "30px" }} />
-                                            </button>
-                                            <button
-                                                className="btn btn-sm btn-success ms-2"
-                                                onClick={() => addtask(item, i)}
-                                            >
-                                                <TbSubtask style={{ fontSize: "30px" }} />
-                                            </button>
+                                                </button>
+                                                <button
+                                                    className="btn btn-sm btn-danger ms-2"
+                                                    onClick={() => Delete(i)}
+                                                >
+                                                    <MdDelete style={{ fontSize: "30px" }} />
+                                                </button>
+                                                <button
+                                                    className="btn btn-sm btn-success ms-2"
+                                                    onClick={() => { setdisplay(true); setSelectID(i) }}
+                                                >
+                                                    <TbSubtask style={{ fontSize: "30px" }} />
+                                                </button>
 
-                                        </td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            {
+
+                                                item.subdata &&
+                                                item.subdata.map((id, it) => (
+                                                    <div className='d-flex justify-content-between'>
+                                                        <tr>{it + 1}</tr>
+                                                        <tr>{id}</tr>
+                                                        <tr>
+                                                            <tr>
+                                                                <button
+                                                                    className="btn btn-sm btn-warning"
+                                                                    onClick={() => Editsub(it, i)}
+                                                                >
+                                                                    <FaEdit style={{ fontSize: "30px" }} />
+
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-sm btn-danger ms-2"
+                                                                    onClick={() => Delete(i)}
+                                                                >
+                                                                    <MdDelete style={{ fontSize: "30px" }} />
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-sm btn-success ms-2"
+                                                                    onClick={() => { setdisplay(true); setSelectID(i) }}
+                                                                >
+                                                                    <TbSubtask style={{ fontSize: "30px" }} />
+                                                                </button>
+
+                                                            </tr>
+                                                        </tr>
+                                                    </div>
+
+                                                ))
+                                            }
+                                        </tr>
 
                                     </tr>
+
+
+
+
+
+
+
+
                                 ))
                             )}
 
@@ -195,16 +268,17 @@ const Task6copy = () => {
                                         {/* for SubTask Ui  */}
                                         <div className='outer_box1 d-flex p-1 '>
                                             <h1 style={{ color: "Black", fontSize: "40px" }} className='px-5 py-3'>Enter Today Task Here....</h1>
-                                            <form  >
+                                            <form onSubmit={formiksubvalue.handleSubmit}>
                                                 <label htmlFor="sname"></label>
                                                 <input
                                                     id='sname'
                                                     name='sname'
                                                     type="text"
+
                                                     className='inputset2'
-                                                    onBlur={handleBlur}
-                                                    value={sname}
-                                                    onChange={handleChange}
+                                                    onBlur={formiksubvalue.handleBlur}
+                                                    value={formiksubvalue.values.sname}
+                                                    onChange={formiksubvalue.handleChange}
                                                 />
 
 
@@ -213,15 +287,17 @@ const Task6copy = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn w-100 mt-2 fw-semibold text-white"
+
                                                     style={{
                                                         background: "linear-gradient(135deg,#6366f1,#06b6d4)",
                                                         border: "none",
                                                         borderRadius: "12px",
                                                         padding: "10px",
                                                         transition: "0.3s",
+
                                                     }}
                                                 >
-                                                    {editindex !== null ? "Update User" : "Add User"}
+                                                    {editindexsub !== null ? "Update User" : "Add User"}
                                                 </button>
                                                 <div className='d-flex w-100'>
                                                     <button
@@ -236,7 +312,7 @@ const Task6copy = () => {
                                                             margin: "auto",
                                                             marginTop: "5px"
                                                         }}
-                                                        onClick={() => setdisplay(false)}
+
                                                     >
                                                         <FaWindowClose />
                                                     </button>
