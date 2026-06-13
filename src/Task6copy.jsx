@@ -63,19 +63,38 @@ const Task6copy = () => {
                 .required('Required')
         }),
         onSubmit: (values, { resetForm }) => {
-            let newData = data.map((item, ind) => {
-                let subData = item.subdata ? item.subdata : []
+            console.log(selectID || editindexsub, selectID, editindexsub)
+            if (selectID !== null && editindexsub !== null) {
+                setdata((prev) =>
+                    prev.map((item, i) => {
+                        if (i === selectID) {
+                            return {
+                                ...item,
+                                subdata: item.subdata.map((sub, id) =>
+                                    id === editindexsub ? values.sname : sub
+                                ),
+                            };
+                        }
+                        return item;
+                    })
+                );
+            }
+            else {
+                let newData = data.map((item, ind) => {
+                    let subData = item.subdata ? item.subdata : []
 
-                if (ind === selectID) {
-                    return { ...item, subdata: [...subData, values.sname] }
-                }
-                else {
-                    return item
-                };
-            })
-            setdata(newData)
-            console.log(data)
-            resetForm()
+                    if (ind === selectID) {
+                        return { ...item, subdata: [...subData, values.sname] }
+                    }
+                    else {
+                        return item
+                    };
+                })
+                setdata(newData)
+                // console.log(data)
+                resetForm()
+            }
+
         },
 
     })
@@ -86,10 +105,13 @@ const Task6copy = () => {
         setValues(item)
     }
 
-    const Editsub = (it, i) => {
-        console.log(it)
-        seteditindexsub(i)
-        setValues(it)
+    const Editsub = (it, i, id) => {
+        console.log(it, i, id)
+        setSelectID(i)
+        seteditindexsub(id)
+        formiksubvalue.setValues({
+            sname: it
+        })
     }
     const Delete = (i) => {
         setdata(data.filter((_, index) => (
@@ -170,7 +192,7 @@ const Task6copy = () => {
                         </thead>
 
                         <tbody style={{ background: "#fff" }}>
-
+                            {console.log(data)}
                             {data.length === 0 ? (
                                 <tr>
                                     <td colSpan="6" className="text-center py-4">
@@ -214,15 +236,15 @@ const Task6copy = () => {
                                             {
 
                                                 item.subdata &&
-                                                item.subdata.map((id, it) => (
+                                                item.subdata.map((it, id) => (
                                                     <div className='d-flex justify-content-between'>
-                                                        <tr>{it + 1}</tr>
-                                                        <tr>{id}</tr>
+                                                        <tr>{it}</tr>
+                                                        {/* <tr>{id + 1}</tr> */}
                                                         <tr>
                                                             <tr>
                                                                 <button
                                                                     className="btn btn-sm btn-warning"
-                                                                    onClick={() => Editsub(it, i)}
+                                                                    onClick={() => Editsub(it, i, id)}
                                                                 >
                                                                     <FaEdit style={{ fontSize: "30px" }} />
 
@@ -274,7 +296,6 @@ const Task6copy = () => {
                                                     id='sname'
                                                     name='sname'
                                                     type="text"
-
                                                     className='inputset2'
                                                     onBlur={formiksubvalue.handleBlur}
                                                     value={formiksubvalue.values.sname}
@@ -287,7 +308,6 @@ const Task6copy = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn w-100 mt-2 fw-semibold text-white"
-
                                                     style={{
                                                         background: "linear-gradient(135deg,#6366f1,#06b6d4)",
                                                         border: "none",
