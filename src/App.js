@@ -7,6 +7,7 @@ import Task5 from './Task5';
 import Task6 from './Task6';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Task6copy from './Task6copy';
+import Task7copy from './Task7copy';
 
 
 
@@ -19,6 +20,8 @@ function App() {
     {/* <Task5/> */}
     {/* <Task6/> */}
     <Task6copy/>
+    {/* <Task7copy/> */}
+    
     </div>
   );
 }
