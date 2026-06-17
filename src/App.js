@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Task6copy from './Task6copy';
 import Task7copy from './Task7copy';
 import Arrayprac from './Arrayprac';
+import NestedTodo from './NestedTodo';
 
 
 
@@ -20,9 +21,10 @@ function App() {
       {/* <Task3/> */}
       {/* <Task5/> */}
       {/* <Task6/> */}
-      <Task6copy />
+      {/* <Task6copy /> */}
       {/* <Task7copy/> */}
       {/* <Arrayprac/> */}
+      <NestedTodo/>
 
     </div>
   );
