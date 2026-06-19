@@ -34,7 +34,7 @@ const Task6copy = () => {
                 seteditindex(null)
             }
             else {
-                setdata([...data, { ...values, subdata: [] }
+                setdata([...data, {...values,subdata:[] }
                 ])
                 // localStorage.setItem("savedata", JSON.stringify(data))
             }
@@ -59,9 +59,9 @@ const Task6copy = () => {
                         if (i === selectID) {
                             return {
                                 ...item,
-                                subdata: item.subdata.map((sub, id) =>
-                                    id === editindexsub ? values.sname : sub
-                                ),
+                                subdata: item.subdata.map((sub, id) =>{
+                                  return  id === editindexsub ? values.sname : sub
+                                }),
                             };
                         }
                         return item;
@@ -178,182 +178,182 @@ const Task6copy = () => {
 
             <div className=" d-flex" >
                 <div className="  col-12  overflow-hidden card  scrolled" style={{ background: "#064857", color: "white" }}>
-                     <h3 style={{ textAlign: "center",background:"#ffff",color:"#227c92ff",padding:"0",fontWeight:"700" }} className='py-3' >Main Task</h3>
+                    <h3 style={{ textAlign: "center", background: "#ffff", color: "#227c92ff", padding: "0", fontWeight: "700" }} className='py-3' >Main Task</h3>
                     <div className='d-flex justify-content-between px-3' style={{ color: "white" }} >
                         <h5>Name</h5>
                         <h5 className='text-center'>Action</h5>
                     </div>
                     <div className='px-3'>
-                                  {data.length === 0 ? (
-                        <h4 className="text-center">
-                            No Tasks Found
-                        </h4>
-                    ) : (
+                        {data.length === 0 ? (
+                            <h4 className="text-center">
+                                No Tasks Found
+                            </h4>
+                        ) : (
 
-                        data?.map((item, i) => (
-                            <div
+                            data?.map((item, i) => (
+                                <div
 
-                                key={i}>
-                               
+                                    key={i}>
 
-                                <div className='d-flex justify-content-between align-items-center'>
 
-                                    <div>
-                                        <h5>{item.fname}</h5>
+                                    <div className='d-flex justify-content-between align-items-center'>
+
+                                        <div>
+                                            <h5>{item.fname}</h5>
+                                        </div>
+
+
+                                        <div className='align-items-center h-100'>
+                                            <button
+                                                className="btn btn-warning  me-2"
+                                                onClick={() =>
+                                                    Edit(item, i)
+                                                }
+                                            >
+                                                <FaEdit style={{ fontSize: "25" }} />
+                                            </button>
+
+                                            <button
+                                                className="btn btn-danger  me-2"
+                                                onClick={() =>
+                                                    Delete(i)
+                                                }
+                                            >
+                                                <MdDelete style={{ fontSize: "25" }} />
+                                            </button>
+
+                                            <button
+                                                className="btn btn-success "
+                                                onClick={() => { setdisplay(true); setSelectID(i) }
+                                                }
+                                            >
+                                                <TbSubtask style={{ fontSize: "25" }} />
+                                            </button>
+                                        </div>
                                     </div>
 
 
-                                    <div className='align-items-center h-100'>
-                                        <button
-                                            className="btn btn-warning  me-2"
-                                            onClick={() =>
-                                                Edit(item, i)
-                                            }
-                                        >
-                                            <FaEdit style={{ fontSize: "25" }} />
-                                        </button>
+                                    <h4 style={{ textAlign: "center" }}>Sub Tasks</h4>
 
-                                        <button
-                                            className="btn btn-danger  me-2"
-                                            onClick={() =>
-                                                Delete(i)
-                                            }
-                                        >
-                                            <MdDelete style={{ fontSize: "25" }} />
-                                        </button>
+                                    {
 
-                                        <button
-                                            className="btn btn-success "
-                                            onClick={() => { setdisplay(true); setSelectID(i) }
-                                            }
-                                        >
-                                            <TbSubtask style={{ fontSize: "25" }} />
-                                        </button>
-                                    </div>
-                                </div>
+                                        item.subdata.length === 0 ? (
 
+                                            <p>No Sub Task</p>
+                                        ) : (
+                                            item.subdata.map((it, id) => (
 
-                                <h4 style={{ textAlign: "center" }}>Sub Tasks</h4>
+                                                <div className='d-flex justify-content-between mx-2 my-2'>
+                                                    <span>{it}</span>
 
-                                {
+                                                    <div>
 
-                                    item.subdata.length === 0 ? (
+                                                        <button
+                                                            className="btn btn-warning btn-sm me-2"
+                                                            onClick={() =>
+                                                                Editsub(
+                                                                    it,
+                                                                    i,
+                                                                    id
+                                                                )
+                                                            }
+                                                        >
+                                                            <FaEdit />
+                                                        </button>
 
-                                        <p>No Sub Task</p>
-                                    ) : (
-                                        item.subdata.map((it, id) => (
+                                                        <button
+                                                            className="btn btn-danger btn-sm"
+                                                            onClick={() =>
+                                                                newdata(
 
-                                            <div className='d-flex justify-content-between mx-2 my-2'>
-                                                <span>{it}</span>
+                                                                    i, id
+                                                                )
+                                                            }
 
-                                                <div>
+                                                        >
+                                                            <MdDelete />
+                                                        </button>
 
-                                                    <button
-                                                        className="btn btn-warning btn-sm me-2"
-                                                        onClick={() =>
-                                                            Editsub(
-                                                                it,
-                                                                i,
-                                                                id
-                                                            )
-                                                        }
-                                                    >
-                                                        <FaEdit />
-                                                    </button>
-
-                                                    <button
-                                                        className="btn btn-danger btn-sm"
-                                                        onClick={() =>
-                                                            newdata(
-
-                                                                i, id
-                                                            )
-                                                        }
-
-                                                    >
-                                                        <MdDelete />
-                                                    </button>
+                                                    </div>
 
                                                 </div>
 
-                                            </div>
+                                            )
+                                            )
 
                                         )
-                                        )
 
-                                    )
+                                    }
+                                    <hr />
+                                </div>
 
-                                }
-                                <hr />
-                            </div>
+                            ))
+                        )}
 
-                        ))
-                    )}
-
-                    {
-                        display && (
-                            <div
-                                className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-                                style={{
-                                    background: "rgba(0,0,0,0.5)",
-                                    zIndex: 999,
-                                }}
-                            >
+                        {
+                            display && (
                                 <div
-                                    className="bg-white p-4 rounded-4 shadow"
+                                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
                                     style={{
-                                        width: "400px",
-                                        maxWidth: "90%",
+                                        background: "rgba(0,0,0,0.5)",
+                                        zIndex: 999,
                                     }}
                                 >
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 style={{ color: "black" }}>
-                                            {editindexsub !== null
-                                                ? "Edit Sub Task"
-                                                : "Add Sub Task"}
-                                        </h4>
+                                    <div
+                                        className="bg-white p-4 rounded-4 shadow"
+                                        style={{
+                                            width: "400px",
+                                            maxWidth: "90%",
+                                        }}
+                                    >
+                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 style={{ color: "black" }}>
+                                                {editindexsub !== null
+                                                    ? "Edit Sub Task"
+                                                    : "Add Sub Task"}
+                                            </h4>
 
-                                        <FaWindowClose
+                                            <FaWindowClose
 
-                                            size={25}
-                                            style={{ cursor: "pointer", color: "black" }}
-                                            onClick={() => {
-                                                setdisplay(false);
-                                                seteditindexsub(null);
-                                            }}
-                                        />
+                                                size={25}
+                                                style={{ cursor: "pointer", color: "black" }}
+                                                onClick={() => {
+                                                    setdisplay(false);
+                                                    seteditindexsub(null);
+                                                }}
+                                            />
+                                        </div>
+
+                                        <form onSubmit={formiksubvalue.handleSubmit}>
+                                            <input
+                                                type="text"
+                                                name="sname"
+                                                className="form-control"
+                                                placeholder="Enter Sub Task"
+                                                value={formiksubvalue.values.sname}
+                                                onChange={formiksubvalue.handleChange}
+                                                onBlur={formiksubvalue.handleBlur}
+                                            />
+
+                                            {formiksubvalue.touched.sname &&
+                                                formiksubvalue.errors.sname && (
+                                                    <small className="text-danger">
+                                                        {formiksubvalue.errors.sname}
+                                                    </small>
+                                                )}
+
+                                            <button className="btn btn-primary w-100 mt-3">
+                                                {editindexsub !== null
+                                                    ? "Update Sub Task"
+                                                    : "Add Sub Task"}
+                                            </button>
+                                        </form>
                                     </div>
-
-                                    <form onSubmit={formiksubvalue.handleSubmit}>
-                                        <input
-                                            type="text"
-                                            name="sname"
-                                            className="form-control"
-                                            placeholder="Enter Sub Task"
-                                            value={formiksubvalue.values.sname}
-                                            onChange={formiksubvalue.handleChange}
-                                            onBlur={formiksubvalue.handleBlur}
-                                        />
-
-                                        {formiksubvalue.touched.sname &&
-                                            formiksubvalue.errors.sname && (
-                                                <small className="text-danger">
-                                                    {formiksubvalue.errors.sname}
-                                                </small>
-                                            )}
-
-                                        <button className="btn btn-primary w-100 mt-3">
-                                            {editindexsub !== null
-                                                ? "Update Sub Task"
-                                                : "Add Sub Task"}
-                                        </button>
-                                    </form>
                                 </div>
-                            </div>
-                        )
-                    }
+                            )
+                        }
                     </div>
-                  
+
 
 
 

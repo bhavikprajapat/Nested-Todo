@@ -10,6 +10,7 @@ import Task6copy from './Task6copy';
 import Task7copy from './Task7copy';
 import Arrayprac from './Arrayprac';
 import NestedTodo from './NestedTodo';
+import Stringmethod from './Stringmethod';
 
 
 
@@ -25,6 +26,7 @@ function App() {
       {/* <Task7copy/> */}
       {/* <Arrayprac/> */}
       <NestedTodo/>
+      {/* <Stringmethod/> */}
 
     </div>
   );
